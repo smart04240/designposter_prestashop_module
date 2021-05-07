@@ -58,8 +58,11 @@ class AuthControllerCore extends FrontController
                     true
                 );
                 if ($hookResult && $register_form->submit()) {
-                    $link = $this->context->link->getModuleLink('designposter', 'design', [], true);
-                    Tools::redirect($link);
+                    $currentUrl = $this->context->controller->urls['current_url'];
+                    if(stripos($currentUrl, 'back=designposter')) {
+                        $link = $this->context->link->getModuleLink('designposter', 'design', [], true);
+                        Tools::redirect($link);
+                    }
                     
                     $should_redirect = true;
                 }
@@ -79,8 +82,12 @@ class AuthControllerCore extends FrontController
                 if ($login_form->submit()) {
                     $should_redirect = true;
                 }
+                $currentUrl = $this->context->controller->urls['current_url'];
+                if(stripos($currentUrl, 'back=designposter')) {
+                    $link = $this->context->link->getModuleLink('designposter', 'design', [], true);
+                    Tools::redirect($link);
+                }
             }
-
             $currentUrl = $this->context->controller->urls['current_url'];
             if (stripos($currentUrl, 'back=designposter')) {
                 $this->context->controller->urls['pages']['register'] .= '&back=designposter';
